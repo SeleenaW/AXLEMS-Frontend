@@ -1,6 +1,3 @@
-Here’s a sample README file to guide users through setting up, running, and managing the project, including running all services together or each service individually:
-
----
 
 # AXLEMS Frontend Microservices
 
