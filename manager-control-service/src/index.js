@@ -1,17 +1,17 @@
-const app = require('./App');
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
 
-// Define the port for the service to listen on
-const PORT = process.env.PORT || 5002;
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
 
-const colors = {
-  blue: '\x1b[34m',
-  reset: '\x1b[0m'
-};
-
-function log(message) {
-  console.log(`${colors.blue}%s${colors.reset}`, message);
-}
-
-app.listen(PORT, () => {
-  log(`Manager Control Service is running on port ${PORT}`);
-});
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();

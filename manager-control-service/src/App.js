@@ -1,22 +1,25 @@
-const express = require('express');
-const app = express();
+import logo from './logo.svg';
+import './App.css';
 
-// Middleware for parsing JSON requests
-app.use(express.json());
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+        Welcome to the Manager Control Service
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
+  );
+}
 
-// Sample route for the Mnager dashboard
-app.get('/', (req, res) => {
-  res.send('Welcome to the Mnager Dashboard Service');
-});
-
-// Additional routes can be added here
-// Example:
-// app.use('/api/users', userRoutes);
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something went wrong!');
-});
-
-module.exports = app;
+export default App;

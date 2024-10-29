@@ -1,15 +1,16 @@
 {
   "name": "axlems-frontend",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "index.js",
-"scripts": {
+  "scripts": {
     "start:admin-dashboard": "npx nodemon admin-dashboard-service/src/index.js",
     "start:user-login": "npx nodemon user-login-service/src/index.js",
     "start:booking": "npx nodemon booking-service/src/index.js",
     "start:manager-control": "npx nodemon manager-control-service/src/index.js",
     "start:all": "concurrently \"npm run start:admin-dashboard\" \"npm run start:user-login\" \"npm run start:booking\" \"npm run start:manager-control\""
-},
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -17,6 +18,9 @@
     "express": "^4.21.1"
   },
   "devDependencies": {
-    "concurrently": "^9.0.1"
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.0.1",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14"
   }
 }
