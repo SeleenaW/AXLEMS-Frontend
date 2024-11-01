@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import * as yup from 'yup';
 import { Formik } from 'formik';
 import EmojiPicker from 'emoji-picker-react';
@@ -7,6 +10,7 @@ import { addNewExperience } from '../../../services/util/experience';
 const AddExperience = () => {
     const [showPicker, setShowPicker] = useState(false);
     const [selectedIcon, setSelectedIcon] = useState('');
+    const [isBtnLoading, setIsBtnLoading] = useState(false);
 
     const schema = yup.object().shape({
         name: yup.string().required('Name is required').max(50, 'Name must be at most 50 characters'),
@@ -14,19 +18,31 @@ const AddExperience = () => {
     });
 
     const onSubmit = async (values) => {
+        setIsBtnLoading(true);
         let response = await addNewExperience(values.name, values.description, selectedIcon);
+        console.log(response.data.success);
 
         if (response.data.success == true) {
-            console.log("New experience added successfully!");
+            toast.success(<div>{response.data.message}</div>, {
+                position: "top-right",
+                autoClose: 2500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            setIsBtnLoading(false);
         }
         else {
-            console.error("Failed to add new experience!");
+            console.error(response.data.message);
+            setIsBtnLoading(false);
         }
     };
 
     const handleEmojiClick = (emojiData) => {
         if (emojiData && emojiData.emoji) {
-            setSelectedIcon(emojiData.emoji); 
+            setSelectedIcon(emojiData.emoji);
         } else {
             console.error("No emoji selected!");
         }
@@ -38,7 +54,7 @@ const AddExperience = () => {
 
             <div className="flex items-center justify-center mt-20">
                 <div className="w-full max-w-md bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                <h1 className="text-2xl font-semibold text-gray-700 mb-10">Add Experience</h1>
+                    <h1 className="text-2xl font-semibold text-gray-700 mb-10">Add Experience</h1>
                     <Formik
                         initialValues={{ name: '', description: '', icon: selectedIcon }}
                         validationSchema={schema}
@@ -110,12 +126,37 @@ const AddExperience = () => {
 
                                 <div className="flex items-center justify-center">
                                     <button
-                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                        className="bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex items-center justify-center"
                                         type="submit"
-                                        disabled={isSubmitting}
+                                        disabled={isBtnLoading}
                                     >
-                                        Submit
+                                        {isBtnLoading ? (
+                                            <svg
+                                                className="animate-spin h-5 w-5 mr-3"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <circle
+                                                    className="opacity-25"
+                                                    cx="12"
+                                                    cy="12"
+                                                    r="10"
+                                                    stroke="currentColor"
+                                                    strokeWidth="4"
+                                                ></circle>
+                                                <path
+                                                    className="opacity-75"
+                                                    fill="currentColor"
+                                                    d="M4 12a8 8 0 018-8V0c4.418 0 8 3.582 8 8s-3.582 8-8 8v-4a4 4 0 00-4-4H4z"
+                                                ></path>
+                                                Submit
+                                            </svg>
+                                        ) : (
+                                            "Submit"
+                                        )}
                                     </button>
+
                                 </div>
                             </form>
                         )}
