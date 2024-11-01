@@ -15,3 +15,13 @@ export let addNewExperience = async (name, description, selectedIcon ) => {
         return error
     }
 }
+
+//Get All Experiences API Call
+export let getAllExperiences = async () => {
+    try {
+        let value = await axiosInstance.get(BASE_PATH + '/get_all_experiences')
+        return value;
+    } catch (error) {
+        return error
+    }
+}
