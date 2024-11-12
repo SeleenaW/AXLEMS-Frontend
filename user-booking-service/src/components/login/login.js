@@ -1,92 +1,23 @@
 // import logo from './logo.svg';
-import "./App.css";
-import React, { useState } from "react";
-import ReactPlayer from "react-player";
-function App() {
-  // const [videos, setVideos] = useState([
-  //   'https://cdn.pixabay.com/video/2023/02/25/152203-802335648_large.mp4',
-  //   'https://cdn.pixabay.com/video/2023/09/01/178732-860527368_large.mp4',
-  //   'https://example.com/video3.mp4',
+import "./Login.css";
 
-  // ]);
-
-  // const [shuffleOrder, setShuffleOrder] = useState([]);
-
-  // const shuffleArray = (array) => {
-  //   for (let i = array.length - 1; i > 0; i--) {
-  //     const j = Math.floor(Math.random() * (i + 1));
-  //     [array[i], array[j]] = [array[j], array[i]];
-  //   }
-  //   return array;
-  // };
-
-  // React.useEffect(() => {
-  //   setShuffleOrder(shuffleArray(videos));
-  // }, [videos]);
-  {
-    /* {shuffleOrder.map((videoUrl, index) => (
-            <video
-              key={index}
-              src={videoUrl}
-              autoplay
-              loop
-              muted
-              class="object-cover w-full h-full"
-            />
-          ))} */
-  }
-
-  {
-    /* 
-          <ReactPlayer
-            url={shuffleOrder[0]}
-            autoplay={true}
-            loop={true}
-            muted={true}
-            class="object-cover w-full h-full"
-                        width="100%"
-            height="100%"
-          /> */
-  }
+function Login() {
   return (
-    <div className="App">
-      <div class="bg-gray-100 flex justify-center items-center h-screen">
-        {/* <div class="w-1/2 h-screen hidden lg:block ">
-        
-        
-          <video
-            src="https://cdn.pixabay.com/video/2023/07/15/171679-845805108_large.mp4"
-            autoplay="{true}"
-            loop
-            muted
+    <div className="Login">
+      <div class="bg-cyan-900 flex justify-center items-center h-screen">
+        <div class="w-1/2 h-screen hidden lg:block ">
+          <img
+            src="https://webmeedee.com/wp-content/uploads/Tourism-and-Hospitality-Website-Design-1920x1076.webp"
+            alt="Placeholder Image"
             class="object-cover w-full h-full"
-            
-          ></video>
-
-        </div> */}
-
-        <div className="w-1/2 h-screen hidden lg:block relative">
-          <video
-            src="https://cdn.pixabay.com/video/2023/07/15/171679-845805108_large.mp4"
-            autoPlay
-            loop
-            muted
-            className="object-cover w-full h-full blur-sm"
-          ></video>
-
-          {/* Text overlay on video */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <h1 className="text-7xl font-semibold  text-white opacity-100 -mt-40"  style={{
-        textShadow: "2px 2px 4px rgba(0, 0, 0, 0.8)"
-    }}>
-            Discover Your Next Adventure
-            </h1>
-          </div>
+          ></img>
         </div>
 
         <div class="lg:p-36 md:p-52 sm:20 p-8 w-full lg:w-1/2">
           <form class="max-w-md md:ml-auto w-full mr-20 ml-24">
-            <h3 class="text-cyan-900  text-3xl font-medium mb-8">Log in</h3>
+            <h3 class="text-neutral-100 text-3xl font-extrabold mb-8">
+              Log in
+            </h3>
 
             <div class="space-y-4">
               <div>
@@ -95,7 +26,7 @@ function App() {
                   type="email"
                   autocomplete="email"
                   required
-                  class="bg-gray-300 w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-blue-600 focus:bg-transparent"
+                  class="bg-gray-100 w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-blue-600 focus:bg-transparent"
                   placeholder="Email address"
                 />
               </div>
@@ -105,7 +36,7 @@ function App() {
                   type="password"
                   autocomplete="current-password"
                   required
-                  class="bg-gray-300 w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-blue-600 focus:bg-transparent"
+                  class="bg-gray-100 w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-blue-600 focus:bg-transparent"
                   placeholder="Password"
                 />
               </div>
@@ -216,28 +147,10 @@ function App() {
             </div>
           </form>
 
-          <div class="mt-6 text-green-500 text-center ml-20">
+          <div class="mt-6 text-green-500 text-center">
             <a href="#" class="hover:underline">
               Sign up Here
             </a>
-          </div>
-
-          <div class="text-xs mt-6 line-height: 20 ml-20">
-            <p
-              href="jajvascript:void(0);"
-              class="text-bg-cyan-900 hover:text-bg-cyan font-light"
-            >
-              By signing in or creating an account, you agree with our<br></br>
-              <a href="#" class="text-blue-400 hover:text-blue-500">
-                Terms & conditions
-              </a>{" "}
-              and{" "}
-              <a href="#" class="text-blue-400 hover:text-blue-500">
-                Privacy statement
-              </a>{" "}
-              <br></br>All rights reserved. Copyright 2024 <br></br>
-              <br></br>Axonall.com™
-            </p>
           </div>
         </div>
       </div>
@@ -245,4 +158,4 @@ function App() {
   );
 }
 
-export default App;
+export default Login;
