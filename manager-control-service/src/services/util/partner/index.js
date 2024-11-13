@@ -1,10 +1,10 @@
 import { axiosInstance } from '../../api';
-const BASE_PATH = '/vendor_non_API_details';
+const BASE_PATH = '/partner_non_API_details';
 
 
-export let addNewVendorDetailsNonApi = async (values) => {
+export let addNewPartnerDetailsNonApi = async (values) => {
     try {
-        let value = await axiosInstance.post(BASE_PATH + '/createVendorNonAPIDetails', {
+        let value = await axiosInstance.post(BASE_PATH + '/createPartnerNonAPIDetails', {
             hotelName: values.hotelName,
             contactPerson: values.contactPerson,
             emailAddress: values.emailAddress,
