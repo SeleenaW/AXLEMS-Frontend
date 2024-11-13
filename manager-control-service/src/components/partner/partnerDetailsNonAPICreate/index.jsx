@@ -3,10 +3,10 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as yup from 'yup';
 import { Formik } from 'formik';
-import { addNewVendorDetailsNonApi } from '../../../services/util/vendor'; 
+import { addNewPartnerDetailsNonApi } from '../../../services/util/partner'; 
 import Select from 'react-select';
 
-const VendorNonAPIDetailsFormCreate = () => {
+const PartnerNonAPIDetailsFormCreate = () => {
     const [isBtnLoading, setIsBtnLoading] = useState(false);
 
     const countries = [         //195 countries
@@ -256,7 +256,7 @@ const VendorNonAPIDetailsFormCreate = () => {
 
     const onSubmit = async (values) => {
         setIsBtnLoading(true);
-        let response = await addNewVendorDetailsNonApi(values);
+        let response = await addNewPartnerDetailsNonApi(values);
         console.log(response.data.success);
 
         if (response.data.success) {
@@ -280,7 +280,7 @@ const VendorNonAPIDetailsFormCreate = () => {
     return (
         <div className="flex items-center justify-center mt-20">
             <div className="w-full max-w-md bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                <h1 className="text-2xl font-semibold text-gray-700 mb-10">Add Vendor Non API Details</h1>
+                <h1 className="text-2xl font-semibold text-gray-700 mb-10">Add Partner Non API Details</h1>
                 <Formik
                     initialValues={{
                         hotelName: '',
@@ -498,4 +498,4 @@ const VendorNonAPIDetailsFormCreate = () => {
     );
 };
 
-export default VendorNonAPIDetailsFormCreate;
+export default PartnerNonAPIDetailsFormCreate;

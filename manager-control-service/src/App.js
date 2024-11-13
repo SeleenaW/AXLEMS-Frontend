@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from './components/sideNavBar';
 import AddExperience from './components/experience/addExperience';
 import ViewExperience from './components/experience';
-import VendorNonAPIDetailsFormCreate from './components/vendor/vendorDetailsNonAPICreate';
+import PartnerNonAPIDetailsFormCreate from './components/partner/partnerDetailsNonAPICreate';
 
 import {
   LayoutDashboard,
@@ -32,7 +32,7 @@ function App() {
             <Route path="/experience/add" element={<AddExperience />} />
             <Route path="/dashboard" element={<div></div>} /> {/* Example route */}
             <Route path="/experience" element={<ViewExperience />} />
-            <Route path="/vendor/create" element={<VendorNonAPIDetailsFormCreate />} />
+            <Route path="/partner/create" element={<PartnerNonAPIDetailsFormCreate />} />
           </Routes>
         </div>
 
