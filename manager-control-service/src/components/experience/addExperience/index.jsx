@@ -20,7 +20,6 @@ const AddExperience = () => {
     const onSubmit = async (values) => {
         setIsBtnLoading(true);
         let response = await addNewExperience(values.name, values.description, selectedIcon);
-        console.log(response.data.success);
 
         if (response.data.success == true) {
             toast.success(<div>{response.data.message}</div>, {
