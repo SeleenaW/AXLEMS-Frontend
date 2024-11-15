@@ -3,11 +3,14 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as yup from 'yup';
 import { Formik } from 'formik';
-import { addNewPartnerDetailsNonApi } from '../../../services/util/partner'; 
+import { addNewPartnerDetailsNonApi } from '../../../services/util/partner';
 import Select from 'react-select';
+
 
 const PartnerNonAPIDetailsFormCreate = () => {
     const [isBtnLoading, setIsBtnLoading] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+
 
     const countries = [         //195 countries
         { value: 'Afghanistan', label: 'Afghanistan' },
@@ -205,7 +208,7 @@ const PartnerNonAPIDetailsFormCreate = () => {
         { value: 'Zambia', label: 'Zambia' },
         { value: 'Zimbabwe', label: 'Zimbabwe' }
     ];
-    
+
 
     const roomTypes = [
         { value: 'Standard', label: 'Standard' },
@@ -235,9 +238,19 @@ const PartnerNonAPIDetailsFormCreate = () => {
         { value: 'Email', label: 'Email' },
         { value: 'Phone', label: 'Phone' },
     ];
-
     const schema = yup.object().shape({
         hotelName: yup.string().required('Hotel Name is required').max(100, 'Hotel Name must be at most 100 characters'),
+        businessRegistrationNumber: yup.string().required('Business Registration Number is required').max(100, 'Business Registration Number must be at most 100 characters'),
+        taxIDOrVatNumber: yup.string().required('Tax ID or VAT Number is required').max(100, 'Tax ID or VAT Number must be at most 100 characters'),
+        brandOrChainName: yup.string().max(100, 'Brand or Chain Name must be at most 100 characters'),
+        owningCompanyName: yup.string().max(100, 'Owning Company Name must be at most 100 characters'),
+        region: yup.string().max(100, 'Region must be at most 100 characters'),
+
+        media: yup.object().shape({
+            images: yup.string(),
+            video: yup.string().url("Invalid URL").trim().nullable(),
+        }),
+
         contactPerson: yup.string().required('Contact Person is required').max(100, 'Contact Person must be at most 100 characters'),
         emailAddress: yup.string().email('Invalid email').required('Email Address is required').max(100, 'Email must be at most 100 characters'),
         phoneNumber: yup.string().required('Phone Number is required').max(15, 'Phone number must be at most 15 characters'),
@@ -252,11 +265,68 @@ const PartnerNonAPIDetailsFormCreate = () => {
             preferredCommunicationMethod: yup.string().required('Preferred Communication Method is required'),
             specialRequirements: yup.string().max(200, 'Special Requirements must be at most 200 characters'),
         }),
+        paymentDetails: yup.object().shape({
+            currencyAccepted: yup.string().required('Currency Accepted is required').trim(),
+            paymentMethodsAccepted: yup.array()
+                .of(yup.string().oneOf(["Cash", "Credit Card", "Debit Card", "Mobile Payment"]))
+                .default([]),
+        }),
+        cancellationPolicy: yup.string().trim().nullable(),
+        termsAndConditions: yup.string().trim().nullable(),
+        privacyPolicy: yup.string().trim().nullable(),
+        additionalInformation: yup.string().trim().nullable(),
     });
 
     const onSubmit = async (values) => {
+
+        let hotelDetails = {
+            hotelName: values.hotelName,
+            businessRegistrationNumber: values.businessRegistrationNumber,
+            taxIDOrVatNumber: values.taxIDOrVatNumber,
+            brandOrChainName: values.brandOrChainName,
+            owningCompanyName: values.owningCompanyName,
+            contactPerson: values.contactPerson,
+            emailAddress: values.emailAddress,
+            phoneNumber: values.phoneNumber,
+            businessAddress: values.businessAddress,
+            region: values.region,
+            country: values.country,
+            accreditationAndAwards: {
+                accreditations: values.accreditations.map(accreditation => accreditation.value),
+                otherAccreditations: values.otherAccreditations,
+                esgScore: values.esgScore,
+                ecoConsciousCertifications: values.ecoConsciousCertifications.map(certification => certification.value),
+                sustainabilityInitiatives: values.sustainabilityInitiatives,
+            },
+            media: {
+                video: values.media.video,
+                images: values.media.images,
+            },
+            hotelDetails: {
+                numberOfRooms: values.hotelDetails.numberOfRooms,
+                typesOfRooms: values.hotelDetails.typesOfRooms,
+                facilitiesAvailable: values.hotelDetails.facilitiesAvailable,
+            },
+            servicePreferences: {
+                preferredCommunicationMethod: values.servicePreferences.preferredCommunicationMethod,
+                specialRequirements: values.servicePreferences.specialRequirements,
+            },
+            paymentDetails: {
+                currencyAccepted: values.paymentDetails.currencyAccepted,
+                paymentMethodsAccepted: values.paymentDetails.paymentMethodsAccepted,
+            },
+            cancellationPolicy: values.cancellationPolicy,
+            termsAndConditions: values.termsAndConditions,
+            privacyPolicy: values.privacyPolicy,
+            additionalInformation: values.additionalInformation,
+        };
+
+
+
+
+        console.log(hotelDetails, 'hotelDetails');
         setIsBtnLoading(true);
-        let response = await addNewPartnerDetailsNonApi(values);
+        let response = await addNewPartnerDetailsNonApi(hotelDetails);
         console.log(response.data.success);
 
         if (response.data.success) {
@@ -286,6 +356,21 @@ const PartnerNonAPIDetailsFormCreate = () => {
                         hotelName: '',
                         contactPerson: '',
                         emailAddress: '',
+                        brandOrChainName: '',
+                        owningCompanyName: '',
+                        region: '',
+                        businessRegistrationNumber: '',
+                        taxIDOrVatNumber: '',
+                        accreditations: [],
+                        otherAccreditations: '',
+                        esgScore: '',
+                        ecoConsciousCertifications: [],
+                        sustainabilityInitiatives: '',
+
+                        media: {
+                            video: '',
+
+                        },
                         phoneNumber: '',
                         businessAddress: '',
                         country: '',
@@ -298,17 +383,29 @@ const PartnerNonAPIDetailsFormCreate = () => {
                             preferredCommunicationMethod: '',
                             specialRequirements: '',
                         },
+                        paymentDetails: {
+                            currencyAccepted: '',
+                            paymentMethodsAccepted: [],
+                        },
+                        cancellationPolicy: '',
+                        termsAndConditions: '',
+                        privacyPolicy: '',
+                        additionalInformation: '',
+
+
+
                     }}
                     validationSchema={schema}
                     onSubmit={onSubmit}
                 >
                     {({
                         values,
-                        errors,
-                        touched,
                         handleChange,
                         handleBlur,
                         handleSubmit,
+                        setFieldValue,
+                        touched,
+                        errors,
                     }) => (
                         <form onSubmit={handleSubmit}>
                             {/* Hotel Name */}
@@ -326,6 +423,196 @@ const PartnerNonAPIDetailsFormCreate = () => {
                                 />
                                 {errors.hotelName && touched.hotelName && <div className="text-red-500 text-xs italic">{errors.hotelName}</div>}
                             </div>
+
+                            {/* Business Registration Number */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="businessRegistrationNumber">
+                                    Business Registration Number
+                                </label>
+                                <input
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    type="text"
+                                    name="businessRegistrationNumber"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.businessRegistrationNumber}
+                                />
+                                {errors.businessRegistrationNumber && touched.businessRegistrationNumber && <div className="text-red-500 text-xs italic">{errors.businessRegistrationNumber}</div>}
+                            </div>
+
+                            {/* Tax ID or VAT Number */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="taxIDOrVatNumber">
+                                    Tax ID or VAT Number
+                                </label>
+                                <input
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    type="text"
+                                    name="taxIDOrVatNumber"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.taxIDOrVatNumber}
+                                />
+                                {errors.taxIDOrVatNumber && touched.taxIDOrVatNumber && <div className="text-red-500 text-xs italic">{errors.taxIDOrVatNumber}</div>}
+                            </div>
+
+                            {/* Brand or Chain Name */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="brandOrChainName">
+                                    Brand or Chain Name
+                                </label>
+                                <input
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    type="text"
+                                    name="brandOrChainName"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.brandOrChainName}
+                                />
+                                {errors.brandOrChainName && touched.brandOrChainName && <div className="text-red-500 text-xs italic">{errors.brandOrChainName}</div>}
+                            </div>
+
+                            {/* Owning Company Name */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="owningCompanyName">
+                                    Owning Company Name
+                                </label>
+                                <input
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    type="text"
+                                    name="owningCompanyName"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.owningCompanyName}
+                                />
+                                {errors.owningCompanyName && touched.owningCompanyName && <div className="text-red-500 text-xs italic">{errors.owningCompanyName}</div>}
+                            </div>
+
+                            {/* Region */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="region">
+                                    Region
+                                </label>
+                                <input
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    type="text"
+                                    name="region"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.region}
+                                />
+                                {errors.region && touched.region && <div className="text-red-500 text-xs italic">{errors.region}</div>}
+                            </div>
+
+                            {/* Accreditations */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="accreditations">
+                                    Accreditations
+                                </label>
+                                <Select
+                                    isMulti
+                                    options={[
+                                        { value: 'Michelin Star Restaurant', label: 'Michelin Star Restaurant' },
+                                        { value: 'Forbes 5-Star Rating', label: 'Forbes 5-Star Rating' },
+                                        { value: 'AAA Diamond Rating', label: 'AAA Diamond Rating' },
+                                        { value: 'Local Tourism Board Accreditation', label: 'Local Tourism Board Accreditation' },
+                                    ]}
+                                    onChange={(selectedOptions) =>
+                                        handleChange({
+                                            target: {
+                                                name: 'accreditations',
+                                                value: selectedOptions,
+                                            },
+                                        })
+                                    }
+                                    onBlur={handleBlur}
+                                    value={values.accreditations}
+                                />
+                                {errors.accreditations && touched.accreditations && (
+                                    <div className="text-red-500 text-xs italic">{errors.accreditations}</div>
+                                )}
+                            </div>
+
+
+                            {/* Other Accreditations */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="otherAccreditations">
+                                    Other Accreditations
+                                </label>
+                                <input
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    type="text"
+                                    name="otherAccreditations"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.otherAccreditations}
+                                />
+                                {errors.otherAccreditations && touched.otherAccreditations && <div className="text-red-500 text-xs italic">{errors.otherAccreditations}</div>}
+                            </div>
+
+                            {/* ESG Score */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="esgScore">
+                                    ESG Score
+                                </label>
+                                <input
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    type="number"
+                                    name="esgScore"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.esgScore}
+                                />
+                                {errors.esgScore && touched.esgScore && <div className="text-red-500 text-xs italic">{errors.esgScore}</div>}
+                            </div>
+
+                            {/* Eco-Conscious Certifications */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="ecoConsciousCertifications">
+                                    Eco-Conscious Certifications
+                                </label>
+                                <Select
+                                    isMulti
+                                    options={[
+                                        { value: 'Green Globe Certified', label: 'Green Globe Certified' },
+                                        { value: 'LEED Certified', label: 'LEED Certified' },
+                                        { value: 'Earth Check Certified', label: 'Earth Check Certified' },
+                                    ]}
+                                    onChange={(selectedOptions) =>
+                                        handleChange({
+                                            target: {
+                                                name: 'ecoConsciousCertifications',
+                                                value: selectedOptions,
+                                            },
+                                        })
+                                    }
+                                    onBlur={handleBlur}
+                                    value={values.ecoConsciousCertifications}
+                                />
+                                {errors.ecoConsciousCertifications && touched.ecoConsciousCertifications && (
+                                    <div className="text-red-500 text-xs italic">
+                                        {errors.ecoConsciousCertifications}
+                                    </div>
+                                )}
+                            </div>
+
+
+                            {/* Sustainability Initiatives */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="sustainabilityInitiatives">
+                                    Sustainability Initiatives
+                                </label>
+                                <input
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    type="text"
+                                    name="sustainabilityInitiatives"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.sustainabilityInitiatives}
+                                />
+                                {errors.sustainabilityInitiatives && touched.sustainabilityInitiatives && <div className="text-red-500 text-xs italic">{errors.sustainabilityInitiatives}</div>}
+                            </div>
+
 
                             {/* Contact Person */}
                             <div className="mb-4">
@@ -366,7 +653,7 @@ const PartnerNonAPIDetailsFormCreate = () => {
                                 </label>
                                 <input
                                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    type="mobile"
+                                    type="tel"
                                     name="phoneNumber"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
@@ -445,12 +732,26 @@ const PartnerNonAPIDetailsFormCreate = () => {
                                 <Select
                                     isMulti
                                     options={facilities.map(facility => ({ value: facility, label: facility }))}
-                                    onChange={(selectedOptions) => handleChange({ target: { name: 'hotelDetails.facilitiesAvailable', value: selectedOptions.map(option => option.value) } })}
+                                    onChange={(selectedOptions) =>
+                                        handleChange({
+                                            target: {
+                                                name: 'hotelDetails.facilitiesAvailable',
+                                                value: selectedOptions.map(option => option.value),
+                                            },
+                                        })
+                                    }
                                     onBlur={handleBlur}
-                                    value={facilities.filter(facility => values.hotelDetails.facilitiesAvailable.includes(facility))}
+                                    value={values.hotelDetails.facilitiesAvailable.map(facility =>
+                                        ({ value: facility, label: facility })
+                                    )}
                                 />
-                                {errors.hotelDetails?.facilitiesAvailable && touched.hotelDetails?.facilitiesAvailable && <div className="text-red-500 text-xs italic">{errors.hotelDetails?.facilitiesAvailable}</div>}
+                                {errors.hotelDetails?.facilitiesAvailable && touched.hotelDetails?.facilitiesAvailable && (
+                                    <div className="text-red-500 text-xs italic">
+                                        {errors.hotelDetails?.facilitiesAvailable}
+                                    </div>
+                                )}
                             </div>
+
 
                             {/* Preferred Communication */}
                             <div className="mb-4">
@@ -464,6 +765,136 @@ const PartnerNonAPIDetailsFormCreate = () => {
                                     value={communicationMethods.find(c => c.value === values.servicePreferences.preferredCommunicationMethod)}
                                 />
                                 {errors.servicePreferences?.preferredCommunicationMethod && touched.servicePreferences?.preferredCommunicationMethod && <div className="text-red-500 text-xs italic">{errors.servicePreferences?.preferredCommunicationMethod}</div>}
+                            </div>
+
+                            <div className="mb-4">
+
+                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="media.video">
+                                    images
+                                </label>
+                                <input
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    type="text"
+                                    name="media.images"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.media.images}
+                                />
+                                {errors.media?.images && touched.media?.images && <div className="text-red-500 text-xs italic">{errors.media?.images}</div>}
+                            </div>
+
+
+                            {/* Video */}
+                            <div className="mb-4">
+
+                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="media.video">
+                                    Video
+                                </label>
+                                <input
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    type="text"
+                                    name="media.video"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.media.video}
+                                />
+                                {errors.media?.video && touched.media?.video && <div className="text-red-500 text-xs italic">{errors.media?.video}</div>}
+                            </div>
+
+                            {/* Payment Details */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="paymentDetails.currencyAccepted">
+                                    Currency Accepted
+                                </label>
+                                <input
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    type="text"
+                                    name="paymentDetails.currencyAccepted"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.paymentDetails.currencyAccepted}
+                                />
+                                {errors.paymentDetails?.currencyAccepted && touched.paymentDetails?.currencyAccepted && <div className="text-red-500 text-xs italic">{errors.paymentDetails?.currencyAccepted}</div>}
+                            </div>
+
+                            {/* Payment Methods */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="paymentDetails.paymentMethodsAccepted">
+                                    Payment Methods Accepted
+                                </label>
+                                <Select
+                                    isMulti
+                                    options={[
+                                        { value: 'Cash', label: 'Cash' },
+                                        { value: 'Credit Card', label: 'Credit Card' },
+                                        { value: 'Debit Card', label: 'Debit Card' },
+                                        { value: 'Mobile Payment', label: 'Mobile Payment' },
+                                    ]}
+                                    onChange={(selectedOptions) => handleChange({ target: { name: 'paymentDetails.paymentMethodsAccepted', value: selectedOptions.map(option => option.value) } })}
+                                    onBlur={handleBlur}
+                                    value={values.paymentDetails.paymentMethodsAccepted.map(method => ({ value: method, label: method }))}
+                                />
+                                {errors.paymentDetails?.paymentMethodsAccepted && touched.paymentDetails?.paymentMethodsAccepted && <div className="text-red-500 text-xs italic">{errors.paymentDetails?.paymentMethodsAccepted}</div>}
+                            </div>
+
+                            {/* Cancellation Policy */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="cancellationPolicy">
+                                    Cancellation Policy
+                                </label>
+                                <textarea
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    name="cancellationPolicy"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.cancellationPolicy}
+                                />
+                                {errors.cancellationPolicy && touched.cancellationPolicy && <div className="text-red-500 text-xs italic">{errors.cancellationPolicy}</div>}
+                            </div>
+
+                            {/* Terms and Conditions */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="termsAndConditions">
+                                    Terms and Conditions
+                                </label>
+                                <textarea
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    name="termsAndConditions"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.termsAndConditions}
+                                />
+                                {errors.termsAndConditions && touched.termsAndConditions && <div className="text-red-500 text-xs italic">{errors.termsAndConditions}</div>}
+                            </div>
+
+                            {/* Privacy Policy */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="privacyPolicy">
+                                    Privacy Policy
+                                </label>
+                                <textarea
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    name="privacyPolicy"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.privacyPolicy}
+                                />
+                                {errors.privacyPolicy && touched.privacyPolicy && <div className="text-red-500 text-xs italic">{errors.privacyPolicy}</div>}
+                            </div>
+
+                            {/* Additional Information */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="additionalInformation">
+                                    Additional Information
+                                </label>
+                                <textarea
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    name="additionalInformation"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.additionalInformation}
+                                />
+                                {errors.additionalInformation && touched.additionalInformation && <div className="text-red-500 text-xs italic">{errors.additionalInformation}</div>}
                             </div>
 
                             {/* Special Requirements */}
@@ -485,7 +916,7 @@ const PartnerNonAPIDetailsFormCreate = () => {
                             {/* Submit Button */}
                             <button
                                 type="submit"
-                                className={`w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${isBtnLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                className={`w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${isBtnLoading ? 'cursor-not-allowed' : ''}`}
                                 disabled={isBtnLoading}
                             >
                                 {isBtnLoading ? 'Submitting...' : 'Submit'}
