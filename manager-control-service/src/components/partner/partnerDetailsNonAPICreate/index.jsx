@@ -321,13 +321,8 @@ const PartnerNonAPIDetailsFormCreate = () => {
             additionalInformation: values.additionalInformation,
         };
 
-
-
-
-        console.log(hotelDetails, 'hotelDetails');
         setIsBtnLoading(true);
         let response = await addNewPartnerDetailsNonApi(hotelDetails);
-        console.log(response.data.success);
 
         if (response.data.success) {
             toast.success(<div>{response.data.message}</div>, {
