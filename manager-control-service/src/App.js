@@ -87,6 +87,7 @@ import Login from "./components/partner/login/Login";
 
 import { LayoutDashboard, Volleyball } from "lucide-react";
 import SupportQuery from "./components/partner/supportquery";
+import FaqPage from "./components/partner/faqpage";
 
 function App() {
   return (
@@ -111,7 +112,8 @@ function App() {
             <Route path="/experience/add" element={<AddExperience />} />
             <Route path="/experience" element={<ViewExperience />} />
             <Route path="/partner/create" element={<PartnerNonAPIDetailsFormCreate />} />
-            <Route path="/partner/support-query" element={<SupportQuery/>} />
+            <Route path="/partner/support-query" element={<SupportQuery />} />
+            <Route path="/partner/FAQ-Section" element={<FaqPage />} />
           </Routes>
         </div>
 
