@@ -4,7 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import * as yup from 'yup';
 import { Formik } from 'formik';
 import Select from 'react-select';
-import { createSupportQuery } from '../../../services/api/supportQueryService'; 
+import { createSupportQuery } from '../../../services/api/supportQueryService';
 
 const SupportQuery = () => {
   const [isBtnLoading, setIsBtnLoading] = useState(false);
@@ -27,7 +27,7 @@ const SupportQuery = () => {
   ];
 
   const schema = yup.object().shape({
-    vendorName: yup.string().required('Vendor Name is required'),
+    vendorName: yup.string().optional(),
     vendorId: yup.string().required('Vendor ID is required'),
     contactPerson: yup.string().required('Contact Person is required'),
     email: yup.string().email('Invalid email').required('Email is required'),
@@ -36,23 +36,22 @@ const SupportQuery = () => {
     inquiryType: yup.string().required('Inquiry Type is required'),
     message: yup.string().required('Message is required'),
     urgencyLevel: yup.string().required('Urgency Level is required'),
-    attachments: yup
-      .array() // An array type to handle file attachments
-      .of(
-        yup.object().shape({
-          name: yup.string().required(),
-          size: yup.number().required(),
-          type: yup.string().required(),
-        }),
-      )
-      .nullable(),
+    attachments: yup.string().required('attachments is required'),
+    // attachments: yup
+    //   .array()
+    //   .of(
+    //     yup.object().shape({
+    //       name: yup.string().required(),
+    //       size: yup.number().required(),
+    //       type: yup.string().required(),
+    //     }),
+    //   )
+    //   .nullable(),
   });
 
   const onSubmit = async (values, { setFieldValue }) => {
     setIsBtnLoading(true);
-
     try {
-      // Create a FormData object to hold the form data
       const formData = new FormData();
       formData.append('vendorName', values.vendorName);
       formData.append('vendorId', values.vendorId);
@@ -64,25 +63,21 @@ const SupportQuery = () => {
       formData.append('message', values.message);
       formData.append('urgencyLevel', values.urgencyLevel);
 
-      // Append the attachments if they exist
-      if (values.attachments) {
-        for (const file of values.attachments) {
-          formData.append('attachments', file); // Each file will be sent as an attachment
-        }
-      }
+      formData.append('attachments', values.attachments);
 
-      // Call the API to submit the support query
+      // Append each file in the attachments array
+      // if (values.attachments && values.attachments.length > 0) {
+      //   values.attachments.forEach((file) => {
+      //     formData.append('attachments', file);
+      //   });
+      // }
+
       const response = await createSupportQuery(formData);
-      console.log('Response:', response.data); // Handle the successful response
+      console.log('Response:', response.data);
 
       toast.success('Your message has been sent!', {
         position: 'top-right',
         autoClose: 2500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
       });
     } catch (error) {
       console.error('Error submitting the query:', error);
@@ -91,11 +86,6 @@ const SupportQuery = () => {
         {
           position: 'top-right',
           autoClose: 2500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
         },
       );
     } finally {
@@ -120,11 +110,10 @@ const SupportQuery = () => {
             inquiryType: '',
             message: '',
             urgencyLevel: '',
-            attachments: [], // Initial empty array for file attachments
+            attachments: '222222',
           }}
           validationSchema={schema}
           onSubmit={onSubmit}
-          enableReinitialize={true}
         >
           {({
             values,
@@ -321,22 +310,20 @@ const SupportQuery = () => {
                 )}
               </div>
 
-              {/* File Attachment Input */}
               <div className="mb-4">
-                <label htmlFor="attachments">Attachment(s):</label>
+                <label htmlFor="attachments">Attachments url:</label>
                 <input
-                  type="file"
+                  type="text"
                   name="attachments"
-                  multiple
-                  onChange={(event) => {
-                    const files = Array.from(event.currentTarget.files);
-                    setFieldValue('attachments', files); // Update form value with the selected files
-                  }}
-                  className="border border-gray-300 rounded w-full py-2 px-3"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.attachments}
+                  className={`border ${
+                    errors.attachments && touched.attachments
+                      ? 'border-red-500'
+                      : 'border-gray-300'
+                  } rounded w-full py-2 px-3`}
                 />
-                <small className="text-gray-500">
-                  You can attach multiple files.
-                </small>
                 {errors.attachments && touched.attachments && (
                   <div className="text-red-500 text-xs italic">
                     {errors.attachments}
@@ -344,13 +331,39 @@ const SupportQuery = () => {
                 )}
               </div>
 
-              {/* Submit Button */}
+              {/* File Attachment Input */}
+              {/* <div className="mb-4">
+                <label htmlFor="attachments">Attachment(s):</label>
+                <input
+                  type="file"
+                  name="attachments"
+                  multiple
+                  onChange={(event) => {
+                    const files = Array.from(event.currentTarget.files);
+                    setFieldValue(
+                      'attachments',
+                      files.length > 0 ? files : null,
+                    ); // Update Formik state with files
+                  }}
+                  className={`border ${
+                    errors.attachments && touched.attachments
+                      ? 'border-red-500'
+                      : 'border-gray-300'
+                  } rounded w-full py-2 px-3`}
+                />
+                {errors.attachments && touched.attachments && (
+                  <div className="text-red-500 text-xs italic">
+                    {errors.attachments}
+                  </div>
+                )}
+              </div> */}
+
               <button
                 type="submit"
-                className={`w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
-                  isBtnLoading ? 'opacity-50 cursor-not-allowed' : ''
-                }`}
                 disabled={isBtnLoading}
+                className={`w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ${
+                  isBtnLoading ? 'opacity-50' : ''
+                }`}
               >
                 {isBtnLoading ? 'Submitting...' : 'Submit'}
               </button>
