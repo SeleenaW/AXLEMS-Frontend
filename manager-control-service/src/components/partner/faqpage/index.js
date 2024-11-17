@@ -44,6 +44,36 @@ const FAQPage = () => {
                 },
             ],
         },
+        {
+          category: "Technical Support FAQs",
+          items: [
+              {
+                  question: "I am experiencing system downtime. What should I do?",
+                  answer: "Check the System Health Dashboard for real-time status updates. If an issue is detected, it will be automatically reported to our Tech Admin team.",
+              },
+              {
+                  question: "How do I report a system issue?",
+                  answer: "Use the 'System Alerts & Notifications' section to submit an issue report. Include a detailed description and the priority level (low, medium, high).",
+              },
+              {
+                  question: "What should I do if I encounter an error while submitting a form?",
+                  answer: "Ensure all required fields are filled out correctly. If the issue persists, refer to the error message displayed or contact support via the 'Help Center.'",
+              },
+          ],
+        },
+        {
+            category: "Security and Compliance FAQs",
+            items: [
+                {
+                    question: "Is my data secure on the Axonall platform?",
+                    answer: "Yes, we follow industry-standard security practices, including PCI DSS compliance, data encryption, and regular audits to protect your information.",
+                },
+                {
+                    question: "How does Axonall handle data compliance?",
+                    answer: "We adhere to GDPR, CCPA, and other data protection regulations. Partners are required to acknowledge compliance during registration.",
+                },
+            ],
+        },
     ];
 
     const [expandedIndex, setExpandedIndex] = useState({});
@@ -77,7 +107,7 @@ const FAQPage = () => {
                                     className="bg-white shadow-md rounded-lg overflow-hidden transition-all"
                                 >
                                     <div
-                                        className="flex justify-between items-center px-6 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white cursor-pointer"
+                                        className="flex justify-between items-center px-6 py-4 bg-gradient-to-r from-black to-gray-700 text-white cursor-pointer"
                                         onClick={() => toggleAnswer(categoryIndex, questionIndex)}
                                     >
                                         <h3 className="text-lg font-semibold">{faq.question}</h3>
