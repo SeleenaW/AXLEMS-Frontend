@@ -6,7 +6,7 @@
 // import Sidebar from "./components/sideNavBar";
 // import AddExperience from "./components/experience/addExperience";
 // import ViewExperience from "./components/experience";
-// import PartnerNonAPIDetailsFormCreate from "./components/partner/partnerDetailsNonAPICreate";
+// import PartnerRegistrationNonAPI from "./components/partner/partnerDetailsNonAPICreate";
 // import Login from "./components/partner/login/Login";
 // import ProtectedRoute from "./components/auth/ProtectedRoute";
 
@@ -110,10 +110,9 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<div>Welcome to Dashboard</div>} />
             <Route path="/experience/add" element={<AddExperience />} />
+            <Route path="/dashboard" element={<div></div>} /> {/* Example route */}
             <Route path="/experience" element={<ViewExperience />} />
             <Route path="/partner/create" element={<PartnerNonAPIDetailsFormCreate />} />
-            <Route path="/partner/support-query" element={<SupportQuery />} />
-            <Route path="/partner/FAQ-Section" element={<FaqPage />} />
           </Routes>
         </div>
 

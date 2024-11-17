@@ -12,7 +12,6 @@ const ViewExperience = () => {
 
     const fetchExperiences = async () => {
         let response = await getAllExperiences();
-        console.log(response);
         if (response.data && response.data.success == true) {
             setExperiences(response.data.experiences);
         } else {
