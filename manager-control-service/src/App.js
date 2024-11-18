@@ -7,6 +7,7 @@ import Sidebar from './components/sideNavBar';
 import AddExperience from './components/experience/addExperience';
 import ViewExperience from './components/experience';
 import PartnerRegistrationNonAPI from './components/partner/partnerDetailsNonAPICreate';
+import PartnerAPIDetailsFormCreate from './components/partner/partnerDetailsAPICreate';
 
 import {
   LayoutDashboard,
@@ -33,6 +34,7 @@ function App() {
             <Route path="/dashboard" element={<div></div>} />
             <Route path="/experience" element={<ViewExperience />} />
             <Route path="/partner/details_registration" element={<PartnerRegistrationNonAPI />} />
+            <Route path="/partner/existing_system_registration" element={<PartnerAPIDetailsFormCreate />} />
           </Routes>
         </div>
 
