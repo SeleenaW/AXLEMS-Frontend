@@ -35,7 +35,7 @@ const Navbar = () => {
 
   return (
     <nav
-      style={{ backgroundColor: "rgba(16, 42, 62, 0.4)" }}
+      style={{ backgroundColor: "rgba(16, 42, 62, 0.8)" }}
       className="bg-transparent  text-white fixed w-full z-20 font-poppins shadow-md  bg-opacity-70"
     >
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
@@ -82,13 +82,13 @@ const Navbar = () => {
                 />
               </a>
               <div
-                className={`absolute left-0 top-full bg-white text-gray-800 shadow-md rounded-lg w-72 transition-all duration-300 ease-in-out transform ${
+                className={`absolute left-0 top-full bg-white text-gray-800 shadow-md rounded-lg w-60 -ml-14 transition-all duration-300 ease-in-out transform ${
                   isServicesDropdownOpen
-                    ? "opacity-100 translate-y-0 z-50"
+                    ? "opacity-100 translate-y-8 z-20"
                     : "opacity-0 translate-y-2 z-0"
                 }`}
               >
-                <ul className="py-2">
+                <ul className="py-2 ">
                   <li className="px-6 py-3 hover:bg-teal-100 transition-colors duration-200 cursor-pointer">
                     Room Service
                   </li>
@@ -132,13 +132,13 @@ const Navbar = () => {
                 />
               </a>
               <div
-                className={`absolute left-0 top-full bg-white text-gray-800 shadow-md rounded-lg w-72 transition-all duration-300 ease-in-out transform ${
+                className={`absolute left-0 top-full bg-white text-gray-800 shadow-md rounded-lg w-60 -ml-14 transition-all duration-300 ease-in-out transform ${
                   isBookingDropdownOpen
-                    ? "opacity-100 translate-y-0 z-50"
+                    ? "opacity-100 translate-y-8 z-50"
                     : "opacity-0 translate-y-2 z-0"
                 }`}
               >
-                <ul className="py-2">
+                <ul className="py-2 ">
                   <li className="px-6 py-3 hover:bg-teal-100 transition-colors duration-200 cursor-pointer">
                     Check Availability
                   </li>
@@ -208,9 +208,9 @@ const Navbar = () => {
               </a>
 
               <div
-                className={`absolute left-0 top-full bg-white text-gray-800 shadow-md rounded-lg w-72 transition-all duration-300 ease-in-out transform ${
+                className={`absolute left-0 top-full bg-white text-gray-800 shadow-md rounded-lg w-56 transition-all duration-300 ease-in-out transform ${
                   isAboutDropdownOpen
-                    ? "opacity-100 translate-y-0 z-50"
+                    ? "opacity-100 translate-y-6 z-50"
                     : "opacity-0 translate-y-2 z-0"
                 }`}
               >
@@ -260,7 +260,7 @@ const Navbar = () => {
           </div>
           <br></br>
           <br></br>
-          <ul className=" space-y-16 text-left px-10">
+          <ul className=" space-y-16 text-left px-36">
             <li>
               <a
                 href="#"
@@ -319,7 +319,7 @@ const Navbar = () => {
                 />
               </a>
               {isBookingDropdownOpen && (
-                <div className=" text-white  rounded-lg w-full py-2 mt-2">
+                <div className=" text-white rounded-lg w-full py-2 mt-2">
                   <ul>
                     <li className="px-6 py-3 hover:bg-teal-100 cursor-pointer">
                       Check Availability

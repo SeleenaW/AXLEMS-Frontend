@@ -155,22 +155,6 @@ const Footer = () => {
               <span>contact@axonall.com</span>
             </li>
           </ul>
-          <div className="text-gray-300 text-lg">
-            <p>Subscribe to our newsletter:</p>
-            <form className="flex mt-2">
-              <input
-                type="email"
-                placeholder="Your email"
-                className="w-full px-3 py-2 rounded-l-lg text-gray-800 focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="bg-teal-500 px-4 py-2 rounded-r-lg hover:bg-teal-600 transition duration-300 text-white"
-              >
-                Subscribe
-              </button>
-            </form>
-          </div>
         </div>
       </div>
 
