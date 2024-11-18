@@ -9,7 +9,12 @@ import Select from 'react-select';
 
 const PartnerNonAPIDetailsFormCreate = () => {
     const [isBtnLoading, setIsBtnLoading] = useState(false);
-    const [isSuccess, setIsSuccess] = useState(false);
+    const [isCheckBoxChecked, setIsCheckBoxChecked] = useState(false);
+    const [errorCheckBox, setErrorCheckBox] = useState(false);
+
+    const handleChangeCheckbox = (e) => {
+        setIsCheckBoxChecked(true);
+    };
 
 
     const countries = [         //195 countries
@@ -278,6 +283,13 @@ const PartnerNonAPIDetailsFormCreate = () => {
     });
 
     const onSubmit = async (values) => {
+
+
+
+        if (!isCheckBoxChecked) {
+            setErrorCheckBox(true);
+            return;
+        }
 
         let hotelDetails = {
             hotelName: values.hotelName,
@@ -907,6 +919,26 @@ const PartnerNonAPIDetailsFormCreate = () => {
                                 />
                                 {errors.servicePreferences?.specialRequirements && touched.servicePreferences?.specialRequirements && <div className="text-red-500 text-xs italic">{errors.servicePreferences?.specialRequirements}</div>}
                             </div>
+
+                            <div>
+                                {/* Terms and Conditions Checkbox */}
+                                <div className="mb-4">
+                                    <label className="block text-gray-700 text-sm mb-2" htmlFor="acknowledgmentCheckbox">
+                                        <input
+                                            type="checkbox"
+                                            name="acknowledgmentCheckbox"
+                                            onChange={handleChangeCheckbox} // Pass function reference, not execution
+                                            onBlur={handleBlur}
+                                        />
+                                        &nbsp; I acknowledge that I am responsible for complying with applicable data protection
+                                        laws (ex: GDPR, CCPA) when handling customer data through the API integration.
+                                    </label>
+                                    {errorCheckBox && (
+                                        <div className="text-red-500 text-xs italic">Please check the acknowledgment box to proceed.</div>
+                                    )}
+                                </div>
+                            </div>
+
 
                             {/* Submit Button */}
                             <button

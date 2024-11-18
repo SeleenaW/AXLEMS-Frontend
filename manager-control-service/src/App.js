@@ -84,6 +84,7 @@ import AddExperience from "./components/experience/addExperience";
 import ViewExperience from "./components/experience";
 import PartnerNonAPIDetailsFormCreate from "./components/partner/partnerDetailsNonAPICreate";
 import Login from "./components/partner/login/Login";
+import PartnerAPIDetailsFormCreate from './components/partner/partnerDetailsAPICreate';
 
 import { LayoutDashboard, Volleyball } from "lucide-react";
 import SupportQuery from "./components/partner/supportquery";
@@ -112,7 +113,8 @@ function App() {
             <Route path="/experience/add" element={<AddExperience />} />
             <Route path="/dashboard" element={<div></div>} /> {/* Example route */}
             <Route path="/experience" element={<ViewExperience />} />
-            <Route path="/partner/create" element={<PartnerNonAPIDetailsFormCreate />} />
+            <Route path="/partner/details_registration" element={<PartnerRegistrationNonAPI />} />
+            <Route path="/partner/existing_system_registration" element={<PartnerAPIDetailsFormCreate />} />
           </Routes>
         </div>
 
