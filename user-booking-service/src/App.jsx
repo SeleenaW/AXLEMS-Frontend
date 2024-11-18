@@ -11,7 +11,7 @@ function App() {
       <Header />
 
       {/* <main className="flex-grow container mx-auto py-8  "></main> */}
-      <SearchForm />
+      {/* <SearchForm /> */}
       {/* <Content /> */}
 
       <Footer />

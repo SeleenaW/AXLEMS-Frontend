@@ -3,9 +3,10 @@ import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 import {
   AiOutlineInstagram,
   AiOutlineTwitter,
-  AiOutlineFacebook,
   AiOutlineLinkedin,
 } from "react-icons/ai";
+
+import { SiTiktok } from "react-icons/si";
 
 const Footer = () => {
   return (
@@ -22,12 +23,12 @@ const Footer = () => {
           </p>
           <div className="flex space-x-4 text-2xl">
             <a
-              href="https://facebook.com"
+              href="https://www.tiktok.com/@spaceaxonall"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-300 hover:text-teal-500 transition-colors"
             >
-              <AiOutlineFacebook />
+              <SiTiktok />
             </a>
             <a
               href="https://twitter.com"
@@ -38,7 +39,7 @@ const Footer = () => {
               <AiOutlineTwitter />
             </a>
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/spaceaxonall/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-300 hover:text-teal-500 transition-colors"
@@ -46,7 +47,7 @@ const Footer = () => {
               <AiOutlineInstagram />
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/company/space-axonall"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-300 hover:text-teal-500 transition-colors"

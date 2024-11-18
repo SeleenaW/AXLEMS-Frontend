@@ -1,12 +1,9 @@
 import React from "react";
-import Content from "./";
+// import Content from "./";
 
 const SearchForm = () => {
   return (
-    <div
-      className="relative flex flex-col items-center justify-center min-h-screen bg-cover bg-center font-poppins"
-      style={{ backgroundImage: "url('https://example.com/your-image.jpg')" }}
-    >
+    <div className="relative flex flex-col items-center justify-center min-h-screen bg-cover bg-center font-poppins">
       <div className="absolute inset-0 bg-black opacity-50"></div>
       <div className="relative z-10 text-center mb-8">
         <h1 className="text-4xl font-bold text-teal-500">Refine Your Search</h1>
