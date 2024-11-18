@@ -139,7 +139,7 @@ const Footer = () => {
         {/* Right Section - Contact Info & Newsletter */}
         <div className="text-center md:text-left">
           <h3 className="text-2xl font-semibold text-gray-100 mb-4">
-            Contact & Newsletter
+            Contact Us
           </h3>
           <ul className="space-y-2 text-lg text-gray-300 mb-4">
             <li className="flex items-center justify-center md:justify-start space-x-2">
