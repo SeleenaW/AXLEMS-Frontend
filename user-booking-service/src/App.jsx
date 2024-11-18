@@ -3,7 +3,7 @@ import "./App.css";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import Content from "./Components/Content";
-import RefineSearchPage from "./Components/refine";
+import SearchForm from "./Components/RefineYourSearch/refine";
 import "flowbite";
 function App() {
   return (
@@ -11,8 +11,8 @@ function App() {
       <Header />
 
       {/* <main className="flex-grow container mx-auto py-8  "></main> */}
-      {/* <RefineSearchPage /> */}
-      <Content />
+      <SearchForm />
+      {/* <Content /> */}
 
       <Footer />
     </div>
