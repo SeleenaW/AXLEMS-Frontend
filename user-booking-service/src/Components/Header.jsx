@@ -260,7 +260,7 @@ const Navbar = () => {
           </div>
           <br></br>
           <br></br>
-          <ul className=" space-y-16 text-left px-36">
+          <ul className="space-y-16 text-left px-24 mx-auto">
             <li>
               <a
                 href="#"
@@ -350,8 +350,8 @@ const Navbar = () => {
             <li>
               <a
                 href="#"
-                className="text-white text-xl"
-                // onClick={closeMobileMenu}
+                className="text-white text-xl flex items-center"
+                // onClick={toggleMobileMenu}
                 aria-label="Go to Contact Us"
               >
                 <FaHotel className="inline-block mr-2" /> Contact Us
