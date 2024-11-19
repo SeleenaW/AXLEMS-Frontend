@@ -19,7 +19,43 @@ body {
   height: 40vmin;
   pointer-events: none;
 }
+.custom-select-option {
+  color: #000000; /* Default text color */
+}
 
+.custom-select-option:hover {
+  background-color: #100d25 !important; /* Custom hover background color */
+  color: #ffffff !important; /* Custom hover text color */
+}
+
+.ant-select-selector {
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 9999px !important; /* Full rounded corners */
+  height: 25px !important;
+  padding-right: 0.3rem !important;
+  background-color: transparent !important; /* Custom background color */
+  align-items: center;
+  justify-content: flex-end;
+  text-align: left;
+
+}
+
+.ant-select-selection-placeholder {
+  color: #4a4a4a !important; /* Darker placeholder text color */
+  font-size: 1rem !important; /* Larger placeholder text size */
+  font-family:sans-serif
+}
+
+.ant-picker-input > input::placeholder {
+  color: #4a4a4a !important; /* Darker placeholder text color */
+  font-size: 1rem !important; /* Larger placeholder text size */
+}
+
+
+.ant-select-dropdown {
+  border-radius: 0.5rem !important; /* Rounded corners for dropdown */
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
