@@ -3,10 +3,13 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "@floating-ui/react": "^0.19.0",
         "@heroicons/react": "^2.1.5",
+        "@material-tailwind/react": "^2.1.10",
         "@testing-library/jest-dom": "^5.17.0",
         "@testing-library/react": "^13.4.0",
         "@testing-library/user-event": "^13.5.0",
+        "antd": "^5.22.1",
         "flowbite": "^2.5.2",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
@@ -26,6 +29,10 @@
             "react-app",
             "react-app/jest"
         ]
+    },
+    "overrides": {
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1"
     },
     "browserslist": {
         "production": [

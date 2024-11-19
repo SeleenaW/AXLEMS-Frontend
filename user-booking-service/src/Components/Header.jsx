@@ -36,7 +36,7 @@ const Navbar = () => {
   return (
     <nav
       style={{ backgroundColor: "rgba(16, 42, 62, 0.8)" }}
-      className="bg-transparent  text-white fixed w-full z-20 font-poppins shadow-md  bg-opacity-70"
+      className="bg-transparent text-white fixed w-full z-20 font-poppins shadow-md  bg-opacity-70"
     >
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo */}
@@ -72,7 +72,7 @@ const Navbar = () => {
             >
               <a
                 href="#"
-                className="font-semibold text-white text-xl flex items-center"
+                className="font-semibold text-white text-xl flex items-center "
               >
                 Services
                 <FaChevronDown
@@ -88,7 +88,7 @@ const Navbar = () => {
                     : "opacity-0 translate-y-2 z-0"
                 }`}
               >
-                <ul className="py-2 ">
+                <ul className="py-2">
                   <li className="px-6 py-3 hover:bg-teal-100 transition-colors duration-200 cursor-pointer">
                     Room Service
                   </li>
@@ -116,7 +116,7 @@ const Navbar = () => {
 
             {/* Booking dropdown */}
             <li
-              className="relative flex items-center"
+              className="relative flex items-center group-p3"
               onMouseEnter={handleMouseEnterBooking}
               onMouseLeave={handleMouseLeaveBooking}
             >
@@ -127,12 +127,14 @@ const Navbar = () => {
                 Booking
                 <FaChevronDown
                   className={`ml-2 text-white transition-transform duration-300 ${
-                    isBookingDropdownOpen ? "rotate-180" : ""
+                    isBookingDropdownOpen
+                      ? " pointer-events-none rotate-180"
+                      : ""
                   }`}
                 />
               </a>
               <div
-                className={`absolute left-0 top-full bg-white text-gray-800 shadow-md rounded-lg w-60 -ml-14 transition-all duration-300 ease-in-out transform ${
+                className={`absolute left-0 top-full bg-white text-gray-800 shadow-md rounded-lg w-60 -ml-14 transition-all duration-300 ease-in-out transform mt-1 ${
                   isBookingDropdownOpen
                     ? "opacity-100 translate-y-8 z-50"
                     : "opacity-0 translate-y-2 z-0"
