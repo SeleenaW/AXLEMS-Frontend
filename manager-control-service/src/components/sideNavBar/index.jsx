@@ -10,19 +10,19 @@ export default function Sidebar({ children }) {
   return (
     <aside className={`h-screen transition-all ${expanded ? "w-60" : "w-17"}`}>
       <nav className="h-full flex flex-col bg-white border-r shadow-sm">
-        <div className="p-4 pb-2 flex justify-between items-center">
-          <div className="ms-3">
+        <div className="p-4 pb-2 mb-5 flex justify-between items-center">
+          <div className="ms-6">
             <img
               src={partnerLogo}
               className={`overflow-hidden transition-all ${
-                expanded ? "w-32" : "w-0"
+                expanded ? "w-32 h-10" : "w-0"
               }`}
               alt=""
             />
           </div>
           <button
             onClick={() => setExpanded((curr) => !curr)}
-            className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100"
+            className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100 hidden md:block"
           >
             {expanded ? <ChevronFirst /> : <ChevronLast />}
           </button>
@@ -42,9 +42,9 @@ export function SidebarItem({ icon, text, active, alert }) {
   return (
     <li
       className={`
-        relative flex items-center py-2 px-4 my-1
+        relative flex items-center py-4 px-4 my-2 ms-2
         font-medium rounded-md cursor-pointer
-        transition-colors group
+        transition-colors group font-exo text-[18px]
         ${
           active
             ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
