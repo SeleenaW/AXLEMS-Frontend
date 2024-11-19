@@ -2,6 +2,7 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx}"],
   mode: "jit",
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
       colors: {
@@ -43,4 +44,6 @@ module.exports = {
       // Add custom styles for select option hover
     },
   },
+
+  plugins: [],
 };
